@@ -276,6 +276,7 @@ local CONFIG = {
                 vec4(-41.75, -1111.49, 25.87, 71.5),
             },
             showroomVehicles = {
+                --{ coords = vec4(-45.65, -1093.66, 25.44, 69.5), vehicle = 'g2ef' },
                 { coords = vec4(-45.65, -1093.66, 25.44, 69.5), vehicle = 'asbo' },
                 { coords = vec4(-48.27, -1101.86, 25.44, 294.5), vehicle = 'schafter2' },
                 { coords = vec4(-39.6, -1096.01, 25.44, 66.5), vehicle = 'greenwood' },

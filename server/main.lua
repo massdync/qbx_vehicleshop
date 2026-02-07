@@ -133,7 +133,7 @@ RegisterNetEvent('qbx_vehicleshop:server:buyShowroomVehicle', function(vehicle)
 
     if not CheckVehicleList(vehicle, shopId) then
         -- Comment out this line when testing
-        return exports.qbx_core:Notify(src, locale('error.notallowed'), 'error')
+        --return exports.qbx_core:Notify(src, locale('error.notallowed'), 'error')
     end
 
     local coords = GetClearSpawnArea(shop.vehicleSpawns)
@@ -147,7 +147,7 @@ RegisterNetEvent('qbx_vehicleshop:server:buyShowroomVehicle', function(vehicle)
     local vehiclePrice = getCoreVehicleField(vehicle, 'price', -1)
     if (vehiclePrice == -1) then
         local warnMsg = ('Vehicle [%s]\'s [%s] field may be not set or not found'):format(vehicle, 'price')
-        exports.qbx_core:Notify(0, warnMsg, 'warning')
+        lib.print.warn(warnMsg)
         vehiclePrice = 1
     end
 
