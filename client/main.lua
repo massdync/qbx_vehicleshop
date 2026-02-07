@@ -123,12 +123,19 @@ local function showFinancedVehiclesMenu()
     lib.showContext('ownedVehicles')
 end
 
+-- Helper function
+local function getVehicleField(vehKey, fieldName, defaultValue)
+    local vehInfo = VEHICLES[vehKey]
+    if (vehInfo) then return vehInfo[fieldName] else return defaultValue end
+end
+
 ---@param closestVehicle integer
 ---@return string
 local function getVehName(closestVehicle)
     local vehicle = sharedConfig.shops[insideShop].showroomVehicles[closestVehicle].vehicle
 
-    return VEHICLES[vehicle].name
+    --return VEHICLES[vehicle].name
+    return getVehicleField(vehicle, 'name', 'UNKNOWN_NAME')
 end
 
 ---@param closestVehicle integer
@@ -136,7 +143,9 @@ end
 local function getVehPrice(closestVehicle)
     local vehicle = sharedConfig.shops[insideShop].showroomVehicles[closestVehicle].vehicle
 
-    return lib.math.groupdigits(VEHICLES[vehicle].price)
+    --return lib.math.groupdigits(VEHICLES[vehicle].price)
+    local price = getVehicleField(vehicle, 'price', 1)
+    return lib.math.groupdigits(price)
 end
 
 ---@param closestVehicle integer
@@ -144,7 +153,8 @@ end
 local function getVehBrand(closestVehicle)
     local vehicle = sharedConfig.shops[insideShop].showroomVehicles[closestVehicle].vehicle
 
-    return VEHICLES[vehicle].brand
+    --return VEHICLES[vehicle].brand
+    return getVehicleField(vehicle, 'brand', 'UNKNOWN_BRAND')
 end
 
 ---@param targetShowroomVehicle integer Showroom position index
