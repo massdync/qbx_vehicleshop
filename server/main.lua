@@ -114,6 +114,15 @@ AddEventHandler('onResourceStop', function (resourceName)
     end
 end)
 
+local function getCoreVehicleField(vehicle, fieldName, defaultValue)
+    local vehInfo = COREVEHICLES[vehicle]
+    if (vehInfo) then
+        return vehInfo[fieldName]
+    else
+        return defaultValue
+    end
+end
+
 ---@param vehicle string
 RegisterNetEvent('qbx_vehicleshop:server:buyShowroomVehicle', function(vehicle)
     local src = source
@@ -123,6 +132,7 @@ RegisterNetEvent('qbx_vehicleshop:server:buyShowroomVehicle', function(vehicle)
     if not shop then return end
 
     if not CheckVehicleList(vehicle, shopId) then
+        -- Comment out this line when testing
         return exports.qbx_core:Notify(src, locale('error.notallowed'), 'error')
     end
 
@@ -132,7 +142,15 @@ RegisterNetEvent('qbx_vehicleshop:server:buyShowroomVehicle', function(vehicle)
     end
 
     local player = exports.qbx_core:GetPlayer(src)
-    local vehiclePrice = COREVEHICLES[vehicle].price
+    
+    -- Use -1 as a check flag
+    local vehiclePrice = getCoreVehicleField(vehicle, 'price', -1)
+    if (vehiclePrice == -1) then
+        local warnMsg = ('Vehicle [%s]\'s [%s] field may be not set or not found'):format(vehicle, 'price')
+        exports.qbx_core:Notify(0, warnMsg, 'warning')
+        vehiclePrice = 1
+    end
+
     if not RemoveMoney(src, vehiclePrice, 'vehicle-bought-in-showroom') then
         return exports.qbx_core:Notify(src, locale('error.notenoughmoney'), 'error')
     end
